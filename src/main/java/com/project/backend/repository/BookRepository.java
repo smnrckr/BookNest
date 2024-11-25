@@ -1,4 +1,8 @@
 package com.project.backend.repository;
 
-public interface BookRepository {
+import com.project.backend.entity.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BookRepository extends JpaRepository<Book, Long> {
+    Book findByTitle(String title);
 }

@@ -1,4 +1,5 @@
 package com.project.backend.entity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,10 +9,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(nullable = false,unique = true)
     String username;
+    @Column(nullable = false)
     String firstName;
+    @Column(nullable = false)
     String lastName;
+    @Column(nullable = false)
     String password;
+    @Column(nullable = false, unique = true)
     String email;
 
     public Long getId() {
@@ -21,6 +27,7 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getUsername() {
         return username;
