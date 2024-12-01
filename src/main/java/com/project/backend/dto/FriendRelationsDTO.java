@@ -1,6 +1,6 @@
 package com.project.backend.dto;
 
-public class AddFriendDTO {
+public class FriendRelationsDTO {
     private Long userId;
     private Long friendId;
 

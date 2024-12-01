@@ -18,6 +18,7 @@ public class FriendService {
     @Autowired
     private  FriendRepository friendRepository;
 
+
     public ResponseEntity<?> addFriend(Long userId, Long friendId) {
         Optional<User> userOptional = userRepository.findById(userId);
         Optional<User> friendOptional = userRepository.findById(friendId);

@@ -1,8 +1,6 @@
 package com.project.backend.controller;
 
-import com.project.backend.dto.AddFriendDTO;
-import com.project.backend.entity.Friend;
-import com.project.backend.repository.FriendRepository;
+import com.project.backend.dto.FriendRelationsDTO;
 import com.project.backend.service.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,7 @@ public class FriendController {
     private FriendService friendService;
 
     @PostMapping("/addFriend")
-    public ResponseEntity<?> addFriend(@RequestBody AddFriendDTO addFriendRequest) {
+    public ResponseEntity<?> addFriend(@RequestBody FriendRelationsDTO addFriendRequest) {
         try{
             return friendService.addFriend(addFriendRequest.getUserId(), addFriendRequest.getFriendId());
 
@@ -27,7 +25,7 @@ public class FriendController {
     }
 
     @DeleteMapping("/deleteFriend")
-    public ResponseEntity<?> deleteFriend(@RequestBody AddFriendDTO deleteFriendRequest){
+    public ResponseEntity<?> deleteFriend(@RequestBody FriendRelationsDTO deleteFriendRequest){
         try{
             return friendService.removeFriend(deleteFriendRequest.getUserId(), deleteFriendRequest.getFriendId());
 
