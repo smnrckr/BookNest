@@ -1,24 +1,39 @@
 package com.project.backend.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="user_entity")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Friend> friend;
+
+    public List<Friend> getFriend() {
+        return friend;
+    }
+
+    public void setFriend(List<Friend> friend) {
+        this.friend = friend;
+    }
 
     @Column(nullable = false,unique = true)
-    String username;
+    private String username;
     @Column(nullable = false)
-    String firstName;
+    private String firstName;
     @Column(nullable = false)
-    String lastName;
+    private String lastName;
     @Column(nullable = false)
-    String password;
+    private String password;
     @Column(nullable = false, unique = true)
-    String email;
+    private String email;
 
     public Long getId() {
         return id;
