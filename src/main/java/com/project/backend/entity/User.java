@@ -16,13 +16,10 @@ public class User {
     @JsonManagedReference
     private List<Friend> friend;
 
-    public List<Friend> getFriend() {
-        return friend;
-    }
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Review> review;
 
-    public void setFriend(List<Friend> friend) {
-        this.friend = friend;
-    }
 
     @Column(nullable = false,unique = true)
     private String username;
@@ -82,5 +79,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Review> getReview() {
+        return review;
+    }
+
+    public void setReview(List<Review> review) {
+        this.review = review;
+    }
+
+    public List<Friend> getFriend() {
+        return friend;
+    }
+
+    public void setFriend(List<Friend> friend) {
+        this.friend = friend;
     }
 }

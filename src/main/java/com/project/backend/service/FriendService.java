@@ -35,10 +35,16 @@ public class FriendService {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Friend already exists");
         }
 
-        Friend friendship = new Friend();
-        friendship.setUser(user);
-        friendship.setFriend(friend);
-        friendRepository.save(friendship);
+        Friend friendship1 = new Friend();
+        friendship1.setUser(user);
+        friendship1.setFriend(friend);
+        friendRepository.save(friendship1); // user -> friend
+
+        Friend friendship2 = new Friend();
+        friendship2.setUser(friend);
+        friendship2.setFriend(user);
+        friendRepository.save(friendship2);
+
         return ResponseEntity.status(HttpStatus.CREATED).body("Friend added successfully");
     }
 

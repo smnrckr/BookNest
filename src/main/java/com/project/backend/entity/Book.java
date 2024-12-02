@@ -1,18 +1,28 @@
 package com.project.backend.entity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="book_entity")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String title;
-    String author;
-    String genre;
-    String description;
-    Float rating;
+    private String title;
+    private String author;
+    private String genre;
+
+    @Lob
+    private String description;
+
+    private Float rating;
+
+    @OneToMany(mappedBy = "book")
+    @JsonManagedReference
+    private List<Review> review;
 
     public Long getId() {
         return id;
@@ -60,5 +70,13 @@ public class Book {
 
     public void setRating(Float rating) {
         this.rating = rating;
+    }
+
+    public List<Review> getReview() {
+        return review;
+    }
+
+    public void setReview(List<Review> review) {
+        this.review = review;
     }
 }
