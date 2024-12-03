@@ -20,6 +20,11 @@ public class User {
     @JsonManagedReference
     private List<Review> review;
 
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Comment> comment;
+
+
 
     @Column(nullable = false,unique = true)
     private String username;

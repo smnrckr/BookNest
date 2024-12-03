@@ -1,12 +1,11 @@
 package com.project.backend.service;
 
-import com.project.backend.entity.Book;
+import com.project.backend.entity.Library;
 import com.project.backend.entity.Review;
 import com.project.backend.entity.User;
-import com.project.backend.repository.BookRepository;
+import com.project.backend.repository.LibraryRepository;
 import com.project.backend.repository.ReviewRepository;
 import com.project.backend.repository.UserRepository;
-import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +22,11 @@ public class ReviewService {
     private UserRepository UserRepository;
 
     @Autowired
-    private BookRepository bookRepository;
+    private LibraryRepository libraryRepository;
 
-    public ResponseEntity<?> newReview(Long userId, String content, int rating, Long bookId) {
+    public ResponseEntity<?> newReview(Long userId, String content, int rating, Long isbn) {
         try{
-            Optional<Book> bookOptional = bookRepository.findById(bookId);
+            Optional<Library> bookOptional = libraryRepository.findByIsbn(isbn);
             Optional<User> userOptional = UserRepository.findById(userId);
             if(userOptional.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -37,7 +36,7 @@ public class ReviewService {
             }
 
             User user = userOptional.get();
-            Book book = bookOptional.get();
+            Library book = bookOptional.get();
             Review review = new Review();
             review.setUser(user);
             review.setBook(book);

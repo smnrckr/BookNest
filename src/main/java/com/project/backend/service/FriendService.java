@@ -18,7 +18,6 @@ public class FriendService {
     @Autowired
     private  FriendRepository friendRepository;
 
-
     public ResponseEntity<?> addFriend(Long userId, Long friendId) {
         Optional<User> userOptional = userRepository.findById(userId);
         Optional<User> friendOptional = userRepository.findById(friendId);
@@ -35,15 +34,15 @@ public class FriendService {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Friend already exists");
         }
 
-        Friend friendship1 = new Friend();
-        friendship1.setUser(user);
-        friendship1.setFriend(friend);
-        friendRepository.save(friendship1); // user -> friend
+        Friend friendship = new Friend();
+        friendship.setUser(user);
+        friendship.setFriend(friend);
+        friendRepository.save(friendship);
 
-        Friend friendship2 = new Friend();
-        friendship2.setUser(friend);
-        friendship2.setFriend(user);
-        friendRepository.save(friendship2);
+        Friend reverseFriendship = new Friend();
+        reverseFriendship.setUser(friend);
+        reverseFriendship.setFriend(user);
+        friendRepository.save(reverseFriendship);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Friend added successfully");
     }

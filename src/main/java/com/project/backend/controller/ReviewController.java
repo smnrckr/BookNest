@@ -1,7 +1,6 @@
 package com.project.backend.controller;
 
 import com.project.backend.dto.ReviewDTO;
-import com.project.backend.entity.Review;
 import com.project.backend.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

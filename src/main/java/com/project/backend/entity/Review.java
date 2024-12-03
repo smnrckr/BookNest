@@ -1,8 +1,11 @@
 package com.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+
+import java.util.List;
 
 @Entity
 @Table(name = "review_entity")
@@ -25,7 +28,11 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name="book_id")
-    private Book book;
+    private Library book;
+
+    @OneToMany(mappedBy = "review")
+    @JsonManagedReference
+    private List<Comment> comment;
 
     public Long getId() {
         return id;
@@ -43,15 +50,6 @@ public class Review {
         this.content = content;
     }
 
-    @Max(5)
-    @Min(1)
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(@Max(5) @Min(1) int rating) {
-        this.rating = rating;
-    }
 
     public User getUser() {
         return user;
@@ -61,12 +59,22 @@ public class Review {
         this.user = user;
     }
 
-    public Book getBook() {
+    public Library getBook() {
         return book;
     }
 
-    public void setBook(Book book) {
+    public void setBook(Library book) {
         this.book = book;
+    }
+
+    @Max(5)
+    @Min(1)
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(@Max(5) @Min(1) int rating) {
+        this.rating = rating;
     }
 
 }
