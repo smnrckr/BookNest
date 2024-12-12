@@ -23,7 +23,7 @@ public class ReviewController {
         }
     }
 
-    @DeleteMapping("/deleteReview/{reviewId}")
+    @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<?> deleteReview (@PathVariable Long reviewId) {
         try {
             return reviewService.deleteReview(reviewId);
@@ -31,5 +31,10 @@ public class ReviewController {
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Review cannot be deleted");
         }
+    }
+
+    @PutMapping("/reviews/{reviewId}")
+    public ResponseEntity<?> updateReview(@PathVariable Long reviewId, @RequestParam String content, @RequestParam int rating) {
+        return reviewService.updateReview(reviewId, content, rating);
     }
 }

@@ -22,7 +22,7 @@ public class CommentController {
         }
     }
 
-    @DeleteMapping("/deleteComment/{commentId}")
+    @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<?> deleteComment (@PathVariable Long commentId) {
         try {
             return commentService.deleteComment(commentId);
@@ -31,4 +31,10 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Comment cannot be deleted");
         }
     }
+
+    @PutMapping("/comments/{commentId}")
+    public ResponseEntity<?> updateComment(@PathVariable Long commentId, @RequestParam String newCommentContent) {
+        return commentService.updateComment(commentId, newCommentContent);
+    }
+
 }

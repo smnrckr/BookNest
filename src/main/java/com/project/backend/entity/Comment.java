@@ -1,8 +1,16 @@
 package com.project.backend.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
+@Table(name = "comment_entity")
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +27,14 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name= "user_id")
     private User user;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Date reviewAdded;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime reviewUpdatedAt;
 
     public Long getId() {
         return id;
@@ -50,5 +66,21 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getReviewAdded() {
+        return reviewAdded;
+    }
+
+    public void setReviewAdded(Date reviewAdded) {
+        this.reviewAdded = reviewAdded;
+    }
+
+    public LocalDateTime getReviewUpdatedAt() {
+        return reviewUpdatedAt;
+    }
+
+    public void setReviewUpdatedAt(LocalDateTime reviewUpdatedAt) {
+        this.reviewUpdatedAt = reviewUpdatedAt;
     }
 }

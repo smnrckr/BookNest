@@ -4,7 +4,7 @@ import jakarta.persistence.Lob;
 
 public class ReviewDTO {
     private Long reviewId;
-    private Long bookId;
+    private String bookId;
     private Long userId;
 
     @Lob
@@ -20,11 +20,11 @@ public class ReviewDTO {
         this.reviewId = reviewId;
     }
 
-    public Long getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(Long bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 

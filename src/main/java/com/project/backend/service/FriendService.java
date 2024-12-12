@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,13 +38,13 @@ public class FriendService {
         Friend friendship = new Friend();
         friendship.setUser(user);
         friendship.setFriend(friend);
-        friendRepository.save(friendship);
+
 
         Friend reverseFriendship = new Friend();
         reverseFriendship.setUser(friend);
         reverseFriendship.setFriend(user);
-        friendRepository.save(reverseFriendship);
 
+        friendRepository.saveAll(List.of(friendship, reverseFriendship));
         return ResponseEntity.status(HttpStatus.CREATED).body("Friend added successfully");
     }
 

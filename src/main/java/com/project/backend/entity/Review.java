@@ -4,11 +4,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "review_entity")
+@EntityListeners(AuditingEntityListener.class)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,12 +33,20 @@ public class Review {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="book_id")
-    private Library book;
+    @JoinColumn(name="library_id")
+    private Library library;
 
     @OneToMany(mappedBy = "review")
     @JsonManagedReference
     private List<Comment> comment;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Date reviewAdded;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime reviewUpdatedAt;
 
     public Long getId() {
         return id;
@@ -59,14 +73,37 @@ public class Review {
         this.user = user;
     }
 
-    public Library getBook() {
-        return book;
+    public Library getLibrary() {
+        return library;
     }
 
-    public void setBook(Library book) {
-        this.book = book;
+    public void setLibrary(Library library) {
+        this.library = library;
     }
 
+    public List<Comment> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<Comment> comment) {
+        this.comment = comment;
+    }
+
+    public Date getReviewAdded() {
+        return reviewAdded;
+    }
+
+    public void setReviewAdded(Date reviewAdded) {
+        this.reviewAdded = reviewAdded;
+    }
+
+    public LocalDateTime getReviewUpdatedAt() {
+        return reviewUpdatedAt;
+    }
+
+    public void setReviewUpdatedAt(LocalDateTime reviewUpdatedAt) {
+        this.reviewUpdatedAt = reviewUpdatedAt;
+    }
     @Max(5)
     @Min(1)
     public int getRating() {
@@ -76,7 +113,6 @@ public class Review {
     public void setRating(@Max(5) @Min(1) int rating) {
         this.rating = rating;
     }
-
 }
 
 

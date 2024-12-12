@@ -24,7 +24,7 @@ public class ReviewService {
     @Autowired
     private LibraryRepository libraryRepository;
 
-    public ResponseEntity<?> newReview(Long userId, String content, int rating, Long isbn) {
+    public ResponseEntity<?> newReview(Long userId, String content, int rating, String isbn) {
         try{
             Optional<Library> bookOptional = libraryRepository.findByIsbn(isbn);
             Optional<User> userOptional = UserRepository.findById(userId);
@@ -39,7 +39,7 @@ public class ReviewService {
             Library book = bookOptional.get();
             Review review = new Review();
             review.setUser(user);
-            review.setBook(book);
+            review.setLibrary(book);
             review.setContent(content);
             review.setRating(rating);
             reviewRepository.save(review);
@@ -65,5 +65,27 @@ public class ReviewService {
         }
 
     }
+
+    public ResponseEntity<?> updateReview(Long reviewId, String content, int rating) {
+        try {
+            Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+            if (reviewOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Review not found");
+            }
+
+            Review review = reviewOptional.get();
+
+            review.setContent(content);
+            review.setRating(rating);
+
+            reviewRepository.save(review);
+
+            return ResponseEntity.status(HttpStatus.OK).body("Review updated: " + review);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
+        }
+    }
+
 
 }

@@ -54,4 +54,26 @@ public class CommentService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    public ResponseEntity<?> updateComment(Long commentId, String newCommentContent) {
+        try {
+            Optional<Comment> commentOptional = commentRepository.findById(commentId);
+            if (commentOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment not found");
+            }
+
+            Comment comment = commentOptional.get();
+            comment.setComment(newCommentContent);
+
+            commentRepository.save(comment);
+
+            return ResponseEntity.status(HttpStatus.OK).body("Comment updated: " + comment);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong: " + e.getMessage());
+        }
+    }
+
+
+
 }

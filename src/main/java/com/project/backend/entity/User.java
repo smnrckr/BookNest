@@ -24,7 +24,14 @@ public class User {
     @JsonManagedReference
     private List<Comment> comment;
 
-
+    @ManyToMany
+    @JoinTable(
+            name = "user_library",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "library_id")
+    )
+    @JsonManagedReference
+    private List<Library> books;
 
     @Column(nullable = false,unique = true)
     private String username;
@@ -100,5 +107,21 @@ public class User {
 
     public void setFriend(List<Friend> friend) {
         this.friend = friend;
+    }
+
+    public List<Comment> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<Comment> comment) {
+        this.comment = comment;
+    }
+
+    public List<Library> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Library> books) {
+        this.books = books;
     }
 }

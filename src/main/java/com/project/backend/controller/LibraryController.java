@@ -1,10 +1,29 @@
 package com.project.backend.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.project.backend.dto.BookDTO;
+import com.project.backend.entity.Library;
+import com.project.backend.service.LibraryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-
 public class LibraryController {
+
+    @Autowired
+    private LibraryService libraryService;
+
+    @PostMapping("/books/addBook")
+    public ResponseEntity<Library> addBook(@RequestBody BookDTO bookDTO) {
+        try {
+            System.out.println("Received BookDTO: " + bookDTO);
+            Library library = libraryService.addBook(bookDTO, bookDTO.getUserId());
+            return new ResponseEntity<>(library, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
