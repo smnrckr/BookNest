@@ -1,5 +1,6 @@
 package com.project.backend.controller;
 
+import com.project.backend.dto.UserDTO;
 import com.project.backend.entity.User;
 import com.project.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user ) {
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO ) {
         try{
-            return userService.login(user.getUsername(), user.getPassword());
-
+            return userService.login(userDTO);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

@@ -1,5 +1,7 @@
 package com.project.backend.service;
 
+import com.project.backend.dto.UserDTO;
+import com.project.backend.dto.UserLoginDTO;
 import com.project.backend.entity.User;
 import com.project.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity<?> login(String username, String password) {
-        Optional<User> current_user = userRepository.findByUsernameAndPassword(username,password);
-        if(current_user.isPresent()) {
-            return ResponseEntity.status((HttpStatus.OK)).body(current_user.get());
-        }else {
+
+    public ResponseEntity<?> login(UserDTO userDTO) {
+        Optional<User> currentUser = userRepository.findByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
+        if (currentUser.isPresent()) {
+            User user = currentUser.get();
+            UserLoginDTO userLoginDTO = new UserLoginDTO();
+            userLoginDTO.setUsername(user.getUsername());
+            userLoginDTO.setFirstName(user.getFirstName());
+            userLoginDTO.setLastName(user.getLastName());
+            userLoginDTO.setEmail(user.getEmail());
+            userLoginDTO.setPassword(user.getPassword());
+            userLoginDTO.setId(user.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(userLoginDTO);
+        } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED");
         }
     }

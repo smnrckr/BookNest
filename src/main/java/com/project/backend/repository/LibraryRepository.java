@@ -1,6 +1,7 @@
 package com.project.backend.repository;
 
 import com.project.backend.entity.Library;
+import com.project.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface LibraryRepository extends JpaRepository<Library, Long> {
     List<Library> findByUsersId(Long userId);
     Optional<Library> findById(Long id);
     boolean existsByIsbnAndUsersId(String isbn, Long userId);
+    List<Library> findBooksByUsers(User user);
+
 }

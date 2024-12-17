@@ -1,5 +1,6 @@
 package com.project.backend.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,6 +15,7 @@ import java.util.List;
 @Table(name="library_entity")
 @EntityListeners(AuditingEntityListener.class)
 public class Library {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +36,7 @@ public class Library {
     private Float rating;
 
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("library-review")
     private List<Review> review;
 
     @CreatedDate
@@ -46,8 +48,9 @@ public class Library {
     private LocalDateTime bookUpdatedAt;
 
     @ManyToMany(mappedBy = "books")
-    @JsonBackReference
+    @JsonBackReference("user-library")
     private List<User> users;
+
 
     public Long getId() {
         return id;

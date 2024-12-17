@@ -1,5 +1,6 @@
 package com.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,10 +23,12 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name= "review_id")
+    @JsonBackReference("review-comment")
     private Review review;
 
     @ManyToOne
     @JoinColumn(name= "user_id")
+    @JsonBackReference("user-comment")
     private User user;
 
     @CreatedDate
@@ -35,6 +38,7 @@ public class Comment {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime reviewUpdatedAt;
+
 
     public Long getId() {
         return id;

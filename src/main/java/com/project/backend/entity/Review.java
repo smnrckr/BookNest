@@ -1,5 +1,6 @@
 package com.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -30,14 +31,16 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name="user_id")
+    @JsonBackReference("user-review")
     private User user;
 
     @ManyToOne
     @JoinColumn(name="library_id")
+    @JsonBackReference("library-review")
     private Library library;
 
     @OneToMany(mappedBy = "review")
-    @JsonManagedReference
+    @JsonManagedReference("review-comment")
     private List<Comment> comment;
 
     @CreatedDate
@@ -47,6 +50,8 @@ public class Review {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime reviewUpdatedAt;
+
+
 
     public Long getId() {
         return id;

@@ -19,11 +19,15 @@ public class LibraryController {
     public ResponseEntity<Library> addBook(@RequestBody BookDTO bookDTO) {
         try {
             System.out.println("Received BookDTO: " + bookDTO);
+            System.out.println("User ID from DTO: " + bookDTO.getUserId());
+            System.out.println("Book ISBN: " + bookDTO.getIsbn());
             Library library = libraryService.addBook(bookDTO, bookDTO.getUserId());
             return new ResponseEntity<>(library, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+
 
 }

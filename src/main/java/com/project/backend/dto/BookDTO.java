@@ -1,5 +1,6 @@
 package com.project.backend.dto;
 
+
 public class BookDTO {
     private String isbn;
     private String title;
@@ -9,7 +10,6 @@ public class BookDTO {
     private Float rating;
     private Long userId;
 
-    // Getter ve Setter metotları
     public String getIsbn() {
         return isbn;
     }
@@ -65,5 +65,7 @@ public class BookDTO {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+
 }
 
