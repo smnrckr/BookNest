@@ -9,9 +9,7 @@ import java.util.Optional;
 
 public interface LibraryRepository extends JpaRepository<Library, Long> {
     Optional<Library> findByIsbn(String isbn);
-    List<Library> findByUsersId(Long userId);
     Optional<Library> findById(Long id);
-    boolean existsByIsbnAndUsersId(String isbn, Long userId);
     List<Library> findBooksByUsers(User user);
 
 }

@@ -1,6 +1,7 @@
 package com.project.backend.service;
 
 import com.project.backend.dto.BookDTO;
+import com.project.backend.dto.LibraryDTO;
 import com.project.backend.entity.Library;
 import com.project.backend.entity.User;
 import com.project.backend.repository.LibraryRepository;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class LibraryService {
 
@@ -59,11 +62,24 @@ public class LibraryService {
         return library;
     }
 
-    public List<Library> getBooksByUser(User user) {
-        return libraryRepository.findBooksByUsers(user);
+    public List<LibraryDTO> getBooksByUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        return libraryRepository.findBooksByUsers(user).stream()
+                .map(book -> new LibraryDTO(
+                        book.getId(),
+                        book.getIsbn(),
+                        book.getTitle(),
+                        book.getAuthor(),
+                        book.getGenre(),
+                        book.getDescription(),
+                        book.getRating()
+                ))
+                .collect(Collectors.toList());
     }
 
 
 
-
 }
+
