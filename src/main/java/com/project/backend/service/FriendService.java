@@ -19,9 +19,9 @@ public class FriendService {
     @Autowired
     private  FriendRepository friendRepository;
 
-    public ResponseEntity<?> addFriend(Long userId, Long friendId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        Optional<User> friendOptional = userRepository.findById(friendId);
+    public ResponseEntity<?> addFriend(String username, String friendUsername) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> friendOptional = userRepository.findByUsername(friendUsername);
 
         if(friendOptional.isEmpty() && userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or friend not found");
@@ -48,9 +48,9 @@ public class FriendService {
         return ResponseEntity.status(HttpStatus.CREATED).body("Friend added successfully");
     }
 
-    public ResponseEntity<?> removeFriend(Long userId, Long friendId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        Optional<User> friendOptional = userRepository.findById(friendId);
+    public ResponseEntity<?> removeFriend(String username, String friendUsername) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> friendOptional = userRepository.findByUsername(friendUsername);
 
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");

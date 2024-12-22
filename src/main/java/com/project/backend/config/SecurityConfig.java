@@ -20,7 +20,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/login", "/api/register", "/api/books/addBook", "/api/user/library").permitAll()
+                        .requestMatchers("/api/login", "/api/register", "/api/books/addBook", "/api/user/library","/api/profile/{username}","api/addFriend","api/books/checkBook", "api/createReview","api/reviews/{googleBookId}","api/createComment","api/review/comments/{reviewId}","api/createComment").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable());

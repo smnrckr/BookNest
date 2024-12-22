@@ -7,13 +7,15 @@ public class LibraryDTO {
     private String title;
     private String author;
     private String genre;
+    private String imageUrl;
+    private String googleBookId;
 
     @Lob
     private String description;
 
     private Float rating;
 
-    public LibraryDTO(Long id, String isbn, String title, String author, String genre, String description, Float rating) {
+    public LibraryDTO(Long id, String isbn, String title, String author, String genre, String description, Float rating, String imageUrl, String googleBookId) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -21,6 +23,10 @@ public class LibraryDTO {
         this.genre = genre;
         this.description = description;
         this.rating = rating;
+        this.imageUrl = imageUrl;
+        this.googleBookId = googleBookId;
+
+
     }
 
     public Long getId() {
@@ -77,5 +83,25 @@ public class LibraryDTO {
 
     public void setRating(Float rating) {
         this.rating = rating;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImage(String image) {
+        this.imageUrl = image;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getGoogleBookId() {
+        return googleBookId;
+    }
+
+    public void setGoogleBookId(String googleBookId) {
+        this.googleBookId = googleBookId;
     }
 }

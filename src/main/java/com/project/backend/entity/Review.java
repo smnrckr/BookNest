@@ -3,8 +3,6 @@ package com.project.backend.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,17 +23,13 @@ public class Review {
     @Lob
     private String content;
 
-    @Max(5)
-    @Min(1)
-    private int rating;
-
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     @JsonBackReference("user-review")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="library_id")
+    @JoinColumn(name = "google_book_id")
     @JsonBackReference("library-review")
     private Library library;
 
@@ -50,8 +44,6 @@ public class Review {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime reviewUpdatedAt;
-
-
 
     public Long getId() {
         return id;
@@ -109,15 +101,7 @@ public class Review {
     public void setReviewUpdatedAt(LocalDateTime reviewUpdatedAt) {
         this.reviewUpdatedAt = reviewUpdatedAt;
     }
-    @Max(5)
-    @Min(1)
-    public int getRating() {
-        return rating;
-    }
 
-    public void setRating(@Max(5) @Min(1) int rating) {
-        this.rating = rating;
-    }
 }
 
 

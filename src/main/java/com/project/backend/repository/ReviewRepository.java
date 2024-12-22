@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     Optional<Review> findById(long id);
-
+    List<Review> findByLibraryGoogleBookId(String googleBookId);
 
 
 }

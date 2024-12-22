@@ -1,5 +1,6 @@
 package com.project.backend.service;
 
+import com.project.backend.dto.ReviewDTO;
 import com.project.backend.entity.Library;
 import com.project.backend.entity.Review;
 import com.project.backend.entity.User;
@@ -11,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -23,10 +26,12 @@ public class ReviewService {
 
     @Autowired
     private LibraryRepository libraryRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public ResponseEntity<?> newReview(Long userId, String content, int rating, String isbn) {
+    public ResponseEntity<?> newReview(Long userId, String content, String googleBookId) {
         try{
-            Optional<Library> bookOptional = libraryRepository.findByIsbn(isbn);
+            Optional<Library> bookOptional = libraryRepository.findByGoogleBookId(googleBookId);
             Optional<User> userOptional = UserRepository.findById(userId);
             if(userOptional.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -41,7 +46,6 @@ public class ReviewService {
             review.setUser(user);
             review.setLibrary(book);
             review.setContent(content);
-            review.setRating(rating);
             reviewRepository.save(review);
             return ResponseEntity.status(HttpStatus.CREATED).body("Review Created: "+review);
         }catch(Exception e){
@@ -66,7 +70,7 @@ public class ReviewService {
 
     }
 
-    public ResponseEntity<?> updateReview(Long reviewId, String content, int rating) {
+    public ResponseEntity<?> updateReview(Long reviewId, String content) {
         try {
             Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
             if (reviewOptional.isEmpty()) {
@@ -76,7 +80,6 @@ public class ReviewService {
             Review review = reviewOptional.get();
 
             review.setContent(content);
-            review.setRating(rating);
 
             reviewRepository.save(review);
 
@@ -85,7 +88,21 @@ public class ReviewService {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
         }
+
     }
+
+
+    public List<ReviewDTO> getBooksReviews(String googleBookId) {
+        if (googleBookId == null) {
+            throw new IllegalArgumentException("Book doesn't exist");
+        }
+
+        List<Review> reviews = reviewRepository.findByLibraryGoogleBookId(googleBookId);
+        return reviews.stream()
+                .map(review -> new ReviewDTO(review.getId(), review.getUser().getUsername(),review.getContent()))
+                .collect(Collectors.toList());
+    }
+
 
 
 }

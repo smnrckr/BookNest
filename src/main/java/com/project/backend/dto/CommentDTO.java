@@ -9,9 +9,16 @@ public class CommentDTO {
     private String comment;
     private Long userId;
     private Long reviewId;
+    private String username;
 
     public Long getCommentId() {
         return commentId;
+    }
+
+    public CommentDTO(String username, String comment) {
+        this.comment = comment;
+        this.username = username;
+
     }
 
     public void setCommentId(Long commentId) {
@@ -40,5 +47,13 @@ public class CommentDTO {
 
     public void setReviewId(Long reviewId) {
         this.reviewId = reviewId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

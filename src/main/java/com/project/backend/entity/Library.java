@@ -20,6 +20,10 @@ public class Library {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    private String googleBookId;
+
+
+    @Column(nullable = false, unique = true)
     private String isbn;
 
     @Column(nullable = false)
@@ -33,6 +37,9 @@ public class Library {
     private String description;
 
     private Float rating;
+
+    @Column(length = 1000)
+    private String imageUrl;
 
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("library-review")
@@ -137,5 +144,21 @@ public class Library {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getGoogleBookId() {
+        return googleBookId;
+    }
+
+    public void setGoogleBookId(String googleBookId) {
+        this.googleBookId = googleBookId;
     }
 }

@@ -10,8 +10,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +25,7 @@ public class LibraryService {
 
     @Autowired
     private UserRepository userRepository;
+
 
     @Transactional
     public Library addBook(BookDTO bookDTO, Long userId) {
@@ -46,8 +47,10 @@ public class LibraryService {
             library.setGenre(bookDTO.getGenre());
             library.setDescription(bookDTO.getDescription());
             library.setRating(bookDTO.getRating());
+            library.setImageUrl(bookDTO.getImageUrl());
             library.setBookAddedAt(new Date());
             library.setBookUpdatedAt(LocalDateTime.now());
+            library.setGoogleBookId(bookDTO.getGoogleBookId());
 
             library = libraryRepository.save(library);
         }
@@ -74,9 +77,16 @@ public class LibraryService {
                         book.getAuthor(),
                         book.getGenre(),
                         book.getDescription(),
-                        book.getRating()
+                        book.getRating(),
+                        book.getImageUrl(),
+                        book.getGoogleBookId()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public boolean isBookInLibrary(String googleBookId) {
+        Optional<Library> book = libraryRepository.findByGoogleBookId(googleBookId);
+        return book.isPresent();
     }
 
 

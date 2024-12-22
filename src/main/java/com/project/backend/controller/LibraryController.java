@@ -24,9 +24,6 @@ public class LibraryController {
     @PostMapping("/books/addBook")
     public ResponseEntity<Library> addBook(@RequestBody BookDTO bookDTO) {
         try {
-            System.out.println("Received BookDTO: " + bookDTO);
-            System.out.println("User ID from DTO: " + bookDTO.getUserId());
-            System.out.println("Book ISBN: " + bookDTO.getIsbn());
             Library library = libraryService.addBook(bookDTO, bookDTO.getUserId());
             return new ResponseEntity<>(library, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -40,6 +37,13 @@ public class LibraryController {
         List<LibraryDTO> books = libraryService.getBooksByUser(loggedInUser);
         return ResponseEntity.ok(books);
     }
+
+    @GetMapping("/books/checkBook")
+    public ResponseEntity<Boolean> checkBook(@RequestParam String googleBookId) {
+        boolean isInLibrary = libraryService.isBookInLibrary(googleBookId);
+        return ResponseEntity.ok(isInLibrary);
+    }
+
 
 
 

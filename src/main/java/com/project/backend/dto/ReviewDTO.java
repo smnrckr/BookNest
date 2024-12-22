@@ -4,13 +4,12 @@ import jakarta.persistence.Lob;
 
 public class ReviewDTO {
     private Long reviewId;
-    private String bookId;
+    private String googleBookId;
     private Long userId;
+    private String username;
 
     @Lob
     private String content;
-
-    private int rating;
 
     public Long getReviewId() {
         return reviewId;
@@ -20,12 +19,12 @@ public class ReviewDTO {
         this.reviewId = reviewId;
     }
 
-    public String getBookId() {
-        return bookId;
+    public String getGoogleBookId() {
+        return googleBookId;
     }
 
-    public void setBookId(String bookId) {
-        this.bookId = bookId;
+    public void setGoogleBookId(String googleBookId) {
+        this.googleBookId = googleBookId;
     }
 
     public Long getUserId() {
@@ -44,11 +43,18 @@ public class ReviewDTO {
         this.content = content;
     }
 
-    public int getRating() {
-        return rating;
+    public String getUsername() {
+        return username;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public ReviewDTO(Long reviewId,String username, String content) {
+        this.reviewId = reviewId;
+        this.username = username;
+        this.content = content;
+
     }
 }

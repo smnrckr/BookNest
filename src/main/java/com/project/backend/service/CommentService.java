@@ -1,5 +1,6 @@
 package com.project.backend.service;
 
+import com.project.backend.dto.CommentDTO;
 import com.project.backend.entity.Comment;
 import com.project.backend.entity.Review;
 import com.project.backend.entity.User;
@@ -11,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -41,6 +44,14 @@ public class CommentService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    public List<CommentDTO> getCommentsByReviewId(Long reviewId) {
+        List<Comment> comments = commentRepository.findByReviewId(reviewId);
+        return comments.stream()
+                .map(comment -> new CommentDTO(comment.getUser().getUsername(), comment.getComment()))
+                .collect(Collectors.toList());
+    }
+
 
     public ResponseEntity<?> deleteComment(Long commentId) {
         try{
@@ -73,6 +84,8 @@ public class CommentService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong: " + e.getMessage());
         }
     }
+
+
 
 
 

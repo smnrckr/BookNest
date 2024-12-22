@@ -1,22 +1,22 @@
 package com.project.backend.dto;
 
 public class FriendRelationsDTO {
-    private Long userId;
-    private Long friendId;
+    private String username;
+    private String friendUsername;
 
-    public Long getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public Long getFriendId() {
-        return friendId;
+    public String getFriendUsername() {
+        return friendUsername;
     }
 
-    public void setFriendId(Long friendId) {
-        this.friendId = friendId;
+    public void setFriendUsername(String friendUsername) {
+        this.friendUsername = friendUsername;
     }
 }

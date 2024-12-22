@@ -9,6 +9,8 @@ public class BookDTO {
     private String description;
     private Float rating;
     private Long userId;
+    private String imageUrl;
+    private String googleBookId;
 
     public String getIsbn() {
         return isbn;
@@ -66,6 +68,20 @@ public class BookDTO {
         this.userId = userId;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getGoogleBookId() {
+        return googleBookId;
+    }
+
+    public void setGoogleBookId(String googleBookId) {
+        this.googleBookId = googleBookId;
+    }
 }
 

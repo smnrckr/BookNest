@@ -17,7 +17,7 @@ public class FriendController {
     @PostMapping("/addFriend")
     public ResponseEntity<?> addFriend(@RequestBody FriendRelationsDTO addFriendRequest) {
         try{
-            return friendService.addFriend(addFriendRequest.getUserId(), addFriendRequest.getFriendId());
+            return friendService.addFriend(addFriendRequest.getUsername(), addFriendRequest.getFriendUsername());
 
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Friend could not be added");
@@ -27,7 +27,7 @@ public class FriendController {
     @DeleteMapping("/deleteFriend")
     public ResponseEntity<?> deleteFriend(@RequestBody FriendRelationsDTO deleteFriendRequest){
         try{
-            return friendService.removeFriend(deleteFriendRequest.getUserId(), deleteFriendRequest.getFriendId());
+            return friendService.removeFriend(deleteFriendRequest.getUsername(), deleteFriendRequest.getFriendUsername());
 
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Friend could not be deleted");

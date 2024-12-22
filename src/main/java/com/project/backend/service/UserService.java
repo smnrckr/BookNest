@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,22 +24,26 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<?> login(UserDTO userDTO) {
+    public Map<String, Object> login(UserDTO userDTO) {
         Optional<User> currentUser = userRepository.findByUsername(userDTO.getUsername());
+
         if (currentUser.isPresent()) {
             User user = currentUser.get();
             if (passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
                 String token = JwtUtil.generateToken(user.getUsername(), user.getId());
-                return ResponseEntity.status(HttpStatus.OK)
-                        .body(Map.of("token", token, "username", user.getUsername()));
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("token", token);
+                response.put("user", user);
+
+                return response;
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
             }
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
-
 
     public ResponseEntity<?> register(User user) {
         Optional<User> existingUserName = userRepository.findByUsername(user.getUsername());
@@ -63,6 +70,10 @@ public class UserService {
         responseDTO.setEmail(createdUser.getEmail());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
     }
 
 

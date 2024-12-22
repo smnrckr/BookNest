@@ -42,4 +42,19 @@ public class JwtUtil {
     public static boolean validateToken(String token, String username) {
         return (username.equals(extractUsername(token)) && !isTokenExpired(token));
     }
+
+    public static String getUsernameFromToken(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return claims.getSubject();  // Burada subject 'username' olmalı
+        } catch (SignatureException e) {
+            throw new RuntimeException("Invalid token signature");
+        } catch (Exception e) {
+            throw new RuntimeException("Token is invalid or expired");
+        }
+    }
 }
