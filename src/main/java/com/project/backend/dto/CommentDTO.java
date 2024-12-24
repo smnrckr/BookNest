@@ -1,28 +1,32 @@
 package com.project.backend.dto;
 
 import jakarta.persistence.Lob;
-
 public class CommentDTO {
 
-    private Long commentId;
+    private Long id;
     @Lob
     private String comment;
+
     private Long userId;
     private Long reviewId;
     private String username;
 
-    public Long getCommentId() {
-        return commentId;
-    }
-
-    public CommentDTO(String username, String comment) {
+    // Constructor
+    public CommentDTO(Long id, String comment, Long userId, Long reviewId, String username) {
+        this.id = id;
         this.comment = comment;
+        this.userId = userId;
+        this.reviewId = reviewId;
         this.username = username;
-
     }
 
-    public void setCommentId(Long commentId) {
-        this.commentId = commentId;
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getComment() {

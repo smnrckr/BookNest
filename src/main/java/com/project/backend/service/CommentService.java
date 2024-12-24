@@ -47,8 +47,18 @@ public class CommentService {
 
     public List<CommentDTO> getCommentsByReviewId(Long reviewId) {
         List<Comment> comments = commentRepository.findByReviewId(reviewId);
+        comments.forEach(comment -> {
+            System.out.println("User: " + comment.getUser());
+            System.out.println("Review: " + comment.getReview());
+        });
         return comments.stream()
-                .map(comment -> new CommentDTO(comment.getUser().getUsername(), comment.getComment()))
+                .map(comment -> new CommentDTO(
+                        comment.getId(),
+                        comment.getComment(),
+                        comment.getUser().getId(),
+                        comment.getReview().getId(),
+                        comment.getUser().getUsername()
+                ))
                 .collect(Collectors.toList());
     }
 
