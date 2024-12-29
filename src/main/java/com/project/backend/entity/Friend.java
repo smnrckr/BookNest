@@ -36,6 +36,9 @@ public class Friend {
     @Column(name = "updated_at")
     private LocalDateTime friendshipUpdatedAt;
 
+    @Column(name = "status", nullable = false)
+    private String status;
+
     public Long getId() {
         return id;
     }
@@ -74,5 +77,13 @@ public class Friend {
 
     public void setFriendshipUpdatedAt(LocalDateTime friendshipUpdatedAt) {
         this.friendshipUpdatedAt = friendshipUpdatedAt;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

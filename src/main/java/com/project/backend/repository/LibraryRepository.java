@@ -13,5 +13,4 @@ public interface LibraryRepository extends JpaRepository<Library, Long> {
     List<Library> findBooksByUsers(User user);
     Optional<Library> findByGoogleBookId(String googleBookId);
 
-
 }
